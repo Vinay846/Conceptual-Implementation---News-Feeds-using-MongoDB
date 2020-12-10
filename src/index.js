@@ -13,6 +13,9 @@ const { newsArticleModel } = require('./connector')
 let offset = 0;
 app.get("/newFeeds", async (req, res)=>{
     let limit = 0;
+    if(req.query.offset !== undefined || req.query.offset !== null){
+        offset += req.query.offset;
+    }
     if(req.query.limit === undefined){
         limit = 10;
     }else{
