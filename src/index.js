@@ -19,12 +19,13 @@ app.get("/newFeeds", async (req, res)=>{
         limit = parseInt(req.query.limit);
     }
     let arr = [];
-    offset += limit;
     if(await newsArticleModel.countDocuments({}) > offset){
         arr = await newsArticleModel.find().skip(offset).limit(limit);
+        offset += limit;
         res.send(arr);
     }else{
         res.send([]);
+        offset += limit;
     }
 })
 
