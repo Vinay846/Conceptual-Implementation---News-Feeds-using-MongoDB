@@ -23,7 +23,9 @@ app.get("/newFeeds", async (req, res)=>{
         limit = parseInt(req.query.limit);
     }else if(isNaN(req.query.limit)){
         limit = 10;
-        offset = 0;
+        if(req.query.offset){
+            offset = 0;
+        }
     }
     let arr = [];
 
