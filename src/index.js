@@ -24,8 +24,10 @@ app.get("/newFeeds", async (req, res)=>{
 
     if(await newsArticleModel.countDocuments({}) > offset){
         arr = await newsArticleModel.find().skip(offset).limit(limit);
-        if(req.query.offset !== undefined){
+        if(!isNaN(req.query.offset)){
             offset += parseInt(req.query.offset);
+        }else if(isNaN(req.query.offset)){
+            offset = 0;
         }
         res.send(arr);
     }else{
