@@ -10,19 +10,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const { newsArticleModel } = require('./connector')
-let offset = 0;
+
 app.get("/newFeeds", async (req, res)=>{
     let limit = 0;
+    let offset = 0;
     const sizeOfPaper = await newsArticleModel.countDocuments({});
     
-    if(isNaN(req.query.limit) || req.query.limit > sizeOfPaper){
+    if(isNaN(req.query.limit)){
         limit = 10;
     }
     else if(!isNaN(req.query.limit)){
         limit = parseInt(req.query.limit);
     }
     if(!isNaN(req.query.offset)){
-        offset += parseInt(req.query.offset);
+        offset = parseInt(req.query.offset);
 
     }else if(isNaN(req.query.offset)){
         offset = 0;
