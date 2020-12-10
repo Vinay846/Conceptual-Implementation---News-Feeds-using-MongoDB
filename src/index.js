@@ -14,18 +14,16 @@ let offset = 0;
 app.get("/newFeeds", async (req, res)=>{
     let limit = 0;
     
-    if(!isNaN(req.query.offset)){
-        offset += parseInt(req.query.offset);
-    }else if(isNaN(req.query.offset)){
-        offset = 0;
-    }
     if(!isNaN(req.query.limit)){
         limit = parseInt(req.query.limit);
     }else if(isNaN(req.query.limit)){
         limit = 10;
-        if(req.query.offset){
-            offset = 0;
-        }
+    }
+    if(!isNaN(req.query.offset)){
+        offset += parseInt(req.query.offset);
+        
+    }else if(isNaN(req.query.offset)){
+        offset = 0;
     }
     let arr = [];
 
