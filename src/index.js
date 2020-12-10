@@ -20,15 +20,16 @@ app.get("/newFeeds", async (req, res)=>{
     if(req.query.limit !== undefined){
         limit = parseInt(req.query.limit);
     }
+    if(!isNaN(req.query.offset)){
+        offset += parseInt(req.query.offset);
+    }else if(isNaN(req.query.offset)){
+        offset = 0;
+    }
     let arr = [];
 
     if(await newsArticleModel.countDocuments({}) > offset){
         arr = await newsArticleModel.find().skip(offset).limit(limit);
-        if(!isNaN(req.query.offset)){
-            offset += parseInt(req.query.offset);
-        }else if(isNaN(req.query.offset)){
-            offset = 0;
-        }
+        
         res.send(arr);
     }else{
         res.send([]);
